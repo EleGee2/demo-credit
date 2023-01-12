@@ -10,7 +10,7 @@ class UserDAO {
       return await db.transaction(async trx => {
         const checkUser = await userQueries.getUserByQuery({ email: values.email })
 
-        if (checkUser.length > 0) {
+        if (checkUser) {
           throw new Error("This email is already registered with us");
         }
 
