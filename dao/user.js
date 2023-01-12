@@ -47,7 +47,7 @@ class UserDAO {
       const validPassword = bcrypt.compareSync(values.password, user.password);
 
       if (!validPassword) {
-        throw new Error("Invalid password");
+        throw new Error("Incorrect email or password");
       }
 
       const token = signToken(user.id, user.email)
