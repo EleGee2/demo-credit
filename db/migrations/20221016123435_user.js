@@ -4,7 +4,7 @@
  */
 exports.up = function(knex) {
   return knex.schema.createTable("user", table => {
-    table.uuid('id', { primaryKey: true}).defaultTo(knex.raw('uuid_generate_v4()'));
+    table.uuid('id', { primaryKey: true})
     table.string('first_name', 255).notNullable();
     table.string('last_name', 255).notNullable();
     table.string('email', 255).notNullable().unique();
