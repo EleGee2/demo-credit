@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon server.js",
     "migrate": "npx knex migrate:latest --knexfile db/knexfile.js",
-    "test": "cross-env NODE_ENV=test jest"
+    "test": "cross-env NODE_ENV=test jest",
+    "heroku-postbuild":"knex migrate:latest --knexfile db/knexfile.js"
   },
   "author": "Jerome",
   "license": "ISC",
