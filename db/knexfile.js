@@ -21,5 +21,23 @@ module.exports = {
     migrations: {
       tableName: 'knex_migrations'
     }
+  },
+  test: {
+    client: 'postgresql',
+    connection: {
+      database: process.env.DB_TEST_NAME,
+      user:     process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD
+    },
+    migrations: {
+      directory: './migrations'
+    }
+  },
+
+    production: {
+    client: 'sqlite3',
+    connection: {
+      filename: "./mydb.sqlite"
+    }
   }
 };
