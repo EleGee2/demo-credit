@@ -39,7 +39,5 @@ const validateToken = async (req, res, next) => {
   }
 }
 
-module.exports = {
-  signToken,
-  validateToken
-}
+exports.signToken = signToken
+exports.validateToken = validateToken

@@ -1,4 +1,3 @@
-const db = require("../db/db");
 const transactionQueries = require("../services/transaction/transactionQueries")
 const userQueries = require("../services/user/userQueries")
 

@@ -5,6 +5,11 @@ const transactionQueries = require("../services/transaction/transactionQueries")
 const { generateTransactionReference } = require("../utils/random")
 
 class WalletDAO {
+
+    constructor() {
+    this.db = db;
+    this.client = db.client;
+  }
     async fundWallet(user, values) {
         try {
             // Start a new database transaction
@@ -25,7 +30,7 @@ class WalletDAO {
                 // increment balance
                 wallet = await walletQueries.incrementWallet(wallet.id, values.amount, trx)
                 await transactionQueries.createTransaction({
-                    type: "FUND",
+                    type: "CREDIT_WALLET",
                     amount: values.amount,
                     to: checkUser.id,
                     status: "SUCCESS",
@@ -39,7 +44,7 @@ class WalletDAO {
                 await transactionQueries.createTransaction({
                     type: "CREDIT_WALLET",
                     amount: values.amount,
-                    to: checkUser[0].id,
+                    to: checkUser.id,
                     status: "SUCCESS",
                     reference: `GETXN_TKN_FUND_${generateTransactionReference(9)}`
                 }, trx)
@@ -51,7 +56,7 @@ class WalletDAO {
             })
 
         } catch (error) {
-            console.error(error);
+            // console.error(error);
             throw error;
         }
     }
@@ -95,7 +100,7 @@ class WalletDAO {
 
     async transferFunds(user, values) {
         try {
-            await db.transaction(async trx => {
+            return await db.transaction(async trx => {
                 const { email, amount } = values
 
                 if (!email || !amount) throw new Error("Please supply email and amount")
