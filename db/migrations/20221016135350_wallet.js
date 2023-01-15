@@ -4,9 +4,10 @@
  */
 exports.up = function(knex) {
   return knex.schema.createTable("wallet", table => {
-    table.uuid('id', { primaryKey: true}).defaultTo(knex.raw('uuid_generate_v4()'));
+    table.increments('id').primary();
     table.bigInteger('balance').notNullable();
-    table.uuid('user_id').references('id').inTable('user')
+    table.integer('user_id').unsigned();
+    table.foreign('user_id').references('user.id');
   })
 };
 
@@ -15,5 +16,8 @@ exports.up = function(knex) {
  * @returns { Promise<void> }
  */
 exports.down = function(knex) {
-  return knex.schema.dropTable("wallet")
+    return knex.table('wallet', table => {
+      table.dropForeign('user_id', "wallet_user_id_foreign");
+    })
+    .then(() => knex.schema.dropTable('wallet'));
 };

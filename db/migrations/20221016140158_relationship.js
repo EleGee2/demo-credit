@@ -4,7 +4,8 @@
  */
 exports.up = async function (knex) {
   await knex.schema.alterTable("user", (table) => {
-    table.uuid("wallet_id").references("id").inTable("wallet").alter();
+    // table.integer("wallet_id").references("id").inTable("wallet").alter();
+    table.foreign('wallet_id').references('wallet.id');
   });
 };
 
@@ -12,4 +13,8 @@ exports.up = async function (knex) {
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.down = function (knex) {};
+exports.down = async function (knex) {
+  await knex.schema.alterTable("user", (table) => {
+    table.dropForeign('wallet_id');
+  });
+};

@@ -12,16 +12,21 @@ const createWallet = async (userId, amount, trx) => {
             balance: amount,
             user_id: userId
         },
-        ["id", "balance"]
-    ).returning("*");
+    ).returning("id").then(id => {
+        return Wallets().transacting(trx).select("*").where("id", id[0]).first()
+    })
 };
 
 const incrementWallet = async (id, amount, trx) => {
-    return Wallets().where({id}).transacting(trx).increment("balance", amount).returning("*");
+    return Wallets().where({id}).transacting(trx).increment("balance", amount).returning("*").then(() => {
+            return Wallets().select('*').where({id}).transacting(trx).first();
+        });
 };
 
 const decrementWallet = async (id, amount, trx) => {
-    return Wallets().where({id}).transacting(trx).decrement("balance", amount).returning("*");
+    return Wallets().where({id}).transacting(trx).decrement("balance", amount).returning("*").then(() => {
+            return Wallets().select('*').where({id}).transacting(trx).first();
+        });
 };
 
 

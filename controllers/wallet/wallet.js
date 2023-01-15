@@ -7,7 +7,7 @@ class WalletController {
             return res.status(200).json({
                 message: "Account funded successfully",
                 payload: {
-                    balance: wallet[0].balance
+                    balance: wallet.balance
                 },
             })
         } catch (error) {
@@ -22,7 +22,7 @@ class WalletController {
             return res.status(200).json({
                 message: "Funds withdrawn successfully",
                 payload: {
-                    balance: wallet[0].balance
+                    balance: wallet.balance
                 },
             })
         } catch (error) {
