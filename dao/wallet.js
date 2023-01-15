@@ -56,7 +56,6 @@ class WalletDAO {
             })
 
         } catch (error) {
-            // console.error(error);
             throw error;
         }
     }
@@ -77,6 +76,10 @@ class WalletDAO {
             let wallet = await walletQueries.getWalletByUserId(user.id);
             if (!wallet) {
                 throw new Error("User Wallet not found")
+            }
+
+            if (wallet.balance <= values.amount) {
+                throw new Error("Insufficient funds")
             }
 
             // update wallet with amount to be withdrawn
@@ -109,10 +112,9 @@ class WalletDAO {
                 const sender = await userQueries.getUserById(user.id, trx)
                 const receiver = await userQueries.getUserByQuery({ email })
 
-                if (sender.length === 0 || receiver.length === 0) {
+                if (!sender || !receiver) {
                     throw new Error("User not found");
                 }
-
 
                 // get sender's wallet balance
                 const senderWallet = await walletQueries.getWalletByUserId(sender.id)
@@ -120,7 +122,7 @@ class WalletDAO {
                 // get receiver wallet
                 const receiverWallet = await walletQueries.getWalletByUserId(receiver.id)
 
-                if(senderWallet.length === 0 || receiverWallet.length === 0) {
+                if(!senderWallet || !receiverWallet) {
                     throw new Error("Wallet not found")
                 }
 

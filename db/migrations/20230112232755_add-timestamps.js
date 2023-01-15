@@ -16,8 +16,8 @@ exports.up = function(knex) {
  */
 exports.down = async function(knex) {
   return knex.schema.alterTable("wallet", function(table) {
-      table.timestamps(false);
-    }).alterTable("transaction", function(table) {
-      table.timestamps(false);
-    })
+    table.dropTimestamps();
+  }).alterTable("transaction", function(table) {
+    table.dropTimestamps();
+  });
 };

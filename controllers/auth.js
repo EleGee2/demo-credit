@@ -27,7 +27,8 @@ const validateToken = async (req, res, next) => {
 
   const currentUser = await Users().where({ id: decoded.id })
 
-  if (!currentUser) {
+
+  if (!currentUser || currentUser.length === 0) {
     return res.status(401).json({ message: "This token is not valid"})
   }
 

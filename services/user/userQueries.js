@@ -13,11 +13,13 @@ const updateUserWalletId = async (userId, walletId, trx) => {
 };
 
 const getUserByQuery = async (query) => {
-    return Users().where({...query}).returning("*").first()
+    return Users().where({...query}).first()
 }
 
 const createUser = async (values, trx) => {
-    return Users().transacting(trx).insert({...values}).returning(["id", "first_name", "last_name", "email", "phone_number"])
+    return Users().transacting(trx).insert({...values}).returning("id").then(id => {
+        return Users().transacting(trx).select("*").where("id", id[0]).first()
+    })
 }
 
 

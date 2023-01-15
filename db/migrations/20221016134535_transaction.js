@@ -4,7 +4,7 @@
  */
 exports.up = function(knex) {
   return knex.schema.createTable("transaction", table => {
-    table.uuid('id', { primaryKey: true});
+    table.increments('id').primary()
     table.string('type', 255).notNullable();
     table.uuid('from').notNullable();
     table.uuid('to').notNullable();

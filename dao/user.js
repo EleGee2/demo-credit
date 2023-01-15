@@ -23,12 +23,15 @@ class UserDAO {
           password: hash,
         }, trx)
 
-        const wallet = await walletQueries.createWallet(user[0].id, 0, trx)
-        await userQueries.updateUserWalletId(user[0].id, wallet[0].id, trx)
+        const wallet = await walletQueries.createWallet(user.id, 0, trx)
 
-        const token = signToken(user[0].id, user[0].email)
+        await userQueries.updateUserWalletId(user.id, wallet.id, trx)
 
-        return {...user[0], token};
+        const token = signToken(user.id, user.email)
+
+        delete user["password"]
+
+        return {...user, token};
       })
     } catch (error) {
       console.error(error)
