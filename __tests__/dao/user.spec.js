@@ -29,13 +29,13 @@ describe('UserDAO', () => {
         it('should create a new user and return the new user with a token', async () => {
             // create stubs for the userQueries and walletQueries methods
             sandbox.stub(userQueries, 'getUserByQuery').resolves(null);
-            sandbox.stub(userQueries, 'createUser').resolves([{
+            sandbox.stub(userQueries, 'createUser').resolves({
                 id: 1,
                 first_name: 'John',
                 last_name: 'Doe',
                 email: 'johndoe@example.com',
                 phone_number: '1234567890'
-            }]);
+            });
             sandbox.stub(walletQueries, 'createWallet').resolves([{
                 id: 1,
                 user_id: 1,

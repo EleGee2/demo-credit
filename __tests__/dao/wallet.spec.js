@@ -159,8 +159,8 @@ describe('WalletDAO', () => {
           });
 
         it('should throw error if sender or receiver is not found', async () => {
-            sandbox.stub(userQueries, 'getUserById').resolves([]);
-            sandbox.stub(userQueries, 'getUserByQuery').resolves([]);
+            sandbox.stub(userQueries, 'getUserById').resolves(null);
+            sandbox.stub(userQueries, 'getUserByQuery').resolves(null);
 
             try {
               await WalletDAO.transferFunds(user, values);
@@ -186,7 +186,7 @@ describe('WalletDAO', () => {
         it("should throw error if sender or receiver wallet is not found", async () => {
             sandbox.stub(userQueries, 'getUserById').resolves({ id: 1 });
             sandbox.stub(userQueries, 'getUserByQuery').resolves({ id: 2 });
-            sandbox.stub(walletQueries, 'getWalletByUserId').resolves([]);
+            sandbox.stub(walletQueries, 'getWalletByUserId').resolves(null);
 
             try {
                 await WalletDAO.transferFunds(user, values);

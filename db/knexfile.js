@@ -8,11 +8,13 @@ dotenv.config({ path: '../config.env' });
 
 module.exports = {
   development: {
-    client: 'postgresql',
+    client: 'mysql',
     connection: {
-      database: process.env.DB_NAME,
-      user:     process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT,
+      user: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME
     },
     pool: {
       min: 2,
@@ -23,11 +25,13 @@ module.exports = {
     }
   },
   test: {
-    client: 'postgresql',
+    client: 'mysql',
     connection: {
-      database: process.env.DB_TEST_NAME,
-      user:     process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT,
+      user: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME
     },
     migrations: {
       directory: './migrations'
